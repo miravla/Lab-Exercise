@@ -23,11 +23,7 @@ private static final long serialVersionUID = 1L;
 	// Private attributes for frame size
 	private int width = 900;
 	private int height = 300;
-	
-	/**
-	 * The constructor that initialize and organize the Swing components on 
-	 * the frame.
-	 */
+
 	public WordCountFrame () {
 		
 		// Default frame setting

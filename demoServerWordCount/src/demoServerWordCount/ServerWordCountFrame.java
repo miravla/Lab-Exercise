@@ -26,9 +26,6 @@ private static final long serialVersionUID = 1L;
 	private int width = 700;
 	private int height = 500;
 
-	/**
-	 * The constructor organize the GUI component for the window.
-	 */
 	public ServerWordCountFrame () {
 		
 		// Default frame setting
@@ -97,10 +94,6 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
-	
-	/**
-	 * This method arrange the GUI component on the frame
-	 */
 	public void loadComponent() {
 		
 		// Get the server status panel and add to frame
@@ -140,12 +133,7 @@ private static final long serialVersionUID = 1L;
 		this.StatusOfServerLabel.setText(status);
 		StatusOfServerLabel.setEditable(false);
 	}
-	
-	/**
-	 * This method define a font to a generic style.
-	 * 
-	 * @return font object
-	 */
+
 	private Font getFontStyle() {
 		
 		Font font = new Font (Font.SANS_SERIF, Font.PLAIN, 30);
