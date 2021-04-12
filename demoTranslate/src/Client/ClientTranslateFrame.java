@@ -1,7 +1,5 @@
 package Client;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,43 +8,30 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+
 import java.awt.SystemColor;
+import javax.swing.JComboBox;
 
 public class ClientTranslateFrame extends JFrame implements ActionListener {
 	
 private static final long serialVersionUID = 1L;
 	
-	// Private frame components
-	private JLabel WordCountLabel;
-	private JTextArea wordToCountText;
-	
 	// Private attributes for frame size
 	private int width = 900;
 	private int height = 300;
+	private JComboBox SentenceComboBox;
+	private JComboBox LanguageComboBox;
+	private JLabel ResultTranslateLabel;
+	private int language, sentence;
 	
-	/**
-	 * The constructor that initialize and organize the Swing components on 
-	 * the frame.
-	 */
+	
 	public ClientTranslateFrame () {
-		
-		// Default frame setting
-		getContentPane().setLayout(new BorderLayout());
 		this.setTitle("TCP Application: Client Side ");
 		this.setSize(width, height);
 		
 		
 		// Center the frame on the screen
         this.setLocationRelativeTo(null);
-		
-		// Initialize default value for label
-        WordCountLabel = new JLabel("");
-        WordCountLabel.setBounds(177, 5, 10, 39);
-		
-		// Row, Column
-		this.wordToCountText = new JTextArea(10, 30);
-		wordToCountText.setBackground(Color.WHITE);
 		
 		// Must close on X
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,10 +45,11 @@ private static final long serialVersionUID = 1L;
 		
 		// Create component
 		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 886, 160);
 		panel.setBackground(SystemColor.control);
-		JLabel TextLabel = new JLabel ("Enter text: ");
-		JButton BahasaMalaysiaButton = new JButton("Bahasa Malaysia");
-		BahasaMalaysiaButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		panel.setLayout(null);
+		JLabel TextLabel = new JLabel ("Choose Your Word :");
+		TextLabel.setBounds(10, 2, 276, 41);
 		
 		
 		// Style the component
@@ -71,79 +57,78 @@ private static final long serialVersionUID = 1L;
 		TextLabel.setBackground(SystemColor.control);
 		TextLabel.setOpaque(true);
 		
-		// Styling the request text
-		wordToCountText.setFont(new Font("Courier", Font.PLAIN, 15));
-		wordToCountText.setLineWrap(true);
-		
 		// Organize components into panel
 		
 		panel.add(TextLabel);
-		panel.add(wordToCountText);
-		panel.add(BahasaMalaysiaButton);
 		
-		JButton ArabicButton = new JButton("Arabic");
-		ArabicButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-		panel.add(ArabicButton);
+		JComboBox comboBox = new JComboBox();
+		// Set up translation language option in comboBox 
+		String [] sentenceList = {"Good morning","Good night","How are you?", "Thank you", 
+							"Goodbye","What's up?"};
+		SentenceComboBox = new JComboBox(sentenceList);
+		SentenceComboBox.setBounds(323, 4, 197, 45);
+		SentenceComboBox.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
+		panel.add(SentenceComboBox);
 		
-		JButton KoreanButton = new JButton("Korean");
-		KoreanButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
-		panel.add(KoreanButton);
+		
+		JButton ComfirmButton = new JButton("Confirm");
+		ComfirmButton.setBounds(530, 86, 110, 41);
+		panel.add(ComfirmButton);
+		ComfirmButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+		ComfirmButton.setActionCommand("Comfirm");
+		
 		JButton ClearButton = new JButton("Cancel");
-		ClearButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 18));
-
-		// Set action command - All buttons are registered to one listener
-		BahasaMalaysiaButton.setActionCommand("Bahasa");
-		ArabicButton.setActionCommand("Arabic");
-		KoreanButton.setActionCommand("Arabic");
-		ClearButton.setActionCommand("Cancel");
-		
-		// Register button to listener
-		BahasaMalaysiaButton.addActionListener(this);
-		ArabicButton.addActionListener(this);
-		KoreanButton.addActionListener(this);
-		ClearButton.addActionListener(this);
+		ClearButton.setBounds(648, 84, 99, 42);
 		panel.add(ClearButton);
 		
+		ClearButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 18));
+		ClearButton.setActionCommand("Cancel");
+		
+		JLabel lblNewLabel_2 = new JLabel("Language :");
+		lblNewLabel_2.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 30));
+		lblNewLabel_2.setBounds(135, 75, 178, 51);
+		panel.add(lblNewLabel_2);
+		
+		// Set up translation language option in comboBox 
+		String [] languageList = {"Bahasa Melayu","Korean","Arabic"};
+		LanguageComboBox = new JComboBox(languageList);
+		LanguageComboBox.setBounds(319, 85, 201, 37);
+		LanguageComboBox.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 23));
+		panel.add(LanguageComboBox);
+		
+		ClearButton.addActionListener(this);
+		ComfirmButton.addActionListener(this);
 		return panel;
 		
 	}
-	
-	
-	private JPanel getOutputPanel(Font font) {
-		
-		// Create component to display date retrieve from the server
-		JPanel panel = new JPanel();
-		JLabel TotalWordLabel = new JLabel ("Results :");
-		TotalWordLabel.setBounds(41, 5, 213, 39);
-
-		// Style the component
-		TotalWordLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 30));
-		WordCountLabel.setFont(font);
-		TotalWordLabel.setBackground(SystemColor.control);
-		WordCountLabel.setBackground(Color.WHITE);
-		WordCountLabel.setOpaque(true);
-		panel.setLayout(null);
-
-		// Organize components into panel
-		panel.add(TotalWordLabel);
-		panel.add(WordCountLabel);
-		
-		return panel;
-	} 
 	
 	
 	private void loadComponent() {
 		
 		// Get font
 		Font font = this.getFontStyle();
+		getContentPane().setLayout(null);
 		
 		// Get server status's panel and add to frame
 		JPanel northPanel = this.getInputPanel(font);		
-		getContentPane().add(northPanel, BorderLayout.NORTH);
+		getContentPane().add(northPanel);
 		
-		// Get server date's panel and add to frame
-		JPanel center = getOutputPanel(font);
-		getContentPane().add(center, BorderLayout.CENTER);
+		
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(0, 159, 886, 94);
+		getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel ResultLabel = new JLabel("Result :");
+		ResultLabel.setBounds(188, 3, 100, 41);
+		ResultLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 30));
+		panel_1.add(ResultLabel);
+		
+		JLabel ResultTranslateLabel = new JLabel("-");
+		ResultTranslateLabel.setBounds(322, 7, 10, 36);
+		ResultTranslateLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 26));
+		panel_1.add(ResultTranslateLabel);
 		
 	}
 	
@@ -156,64 +141,68 @@ private static final long serialVersionUID = 1L;
 		
 	}
 
+	public int getLanguage ()
+	{
+		return language;
+	}
+	
+	public int getSentence ()
+	{
+		return sentence;
+	}
 
-	@Override
-	public void actionPerformed(ActionEvent event) {
+public void updateTranslateResult (String resultAns) {
 		
+		Font font;
 		
+		if (language == 1)
+		{	
+			font = new Font("Malgun Gothic", Font.PLAIN, 30);
+			this.ResultTranslateLabel.setFont(font);
+		}
+		else 
+		{
+			font = this.getFontStyle();
+			this.ResultTranslateLabel.setFont(font);
+		}
+			
+		
+		this.ResultTranslateLabel.setText(resultAns);
+		
+	}
+
+public void waitForInputs() throws InterruptedException {
+    synchronized (this) 
+    {
+        
+        wait();
+    }
+} 
+
+	
+public void actionPerformed(ActionEvent event) {
+		
+
+	
+	language = LanguageComboBox.getSelectedIndex();
+	sentence =SentenceComboBox.getSelectedIndex();
+	
+	synchronized (this)
+	{
+		
+		this.notifyAll();
+	}
 		String actionCommand = event.getActionCommand();
 		
 		switch (actionCommand) {
 			
-		case "Bahasa":
+		case "Comfirm":
 			// Process word counting
 			
-			try {
-				
-				// Send data to server for processing
-				ClientTranslator wordCount = new ClientTranslator();
-				
-				String totalWords = wordCount.countWord(wordToCountText.getText());
-				
-				this.WordCountLabel.setText(totalWords);
-				
-			} catch (Exception exception) {
-				
-				
-			}
+			updateTranslateResult(actionCommand);
 			
 			break;
 		
-		case "Arabic": 
-				try {
-				
-				// Send data to server for processing
-					ClientTranslator wordCount = new ClientTranslator();
-				
-				String totalWords = wordCount.countWord(wordToCountText.getText());
-				
-				this.WordCountLabel.setText(totalWords);
-				
-			} catch (Exception exception) {
-				
-				
-			}
-
-		case "Korean": 
-				try {
-				
-				// Send data to server for processing
-				ClientTranslator wordCount = new ClientTranslator();
-				
-				String totalWords = wordCount.countWord(wordToCountText.getText());
-				
-				this.WordCountLabel.setText(totalWords);
-				
-			} catch (Exception exception) {
-				
-				
-			}
-
 		case "Cancel": 
 			// Clear the frame
 			
@@ -231,8 +220,12 @@ private static final long serialVersionUID = 1L;
 
 	private void clearFrameDisplay () {
 		
-		wordToCountText.setText("");
-		WordCountLabel.setText("-");
+		
+		ResultTranslateLabel.setText("-");
 	}
 
+
+
 }
+	
+

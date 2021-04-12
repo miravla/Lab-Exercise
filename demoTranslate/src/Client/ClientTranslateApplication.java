@@ -1,26 +1,59 @@
 package Client;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class ClientTranslateApplication{
-public static void main(String[] args){
-	try
-	{
-		Socket socket = new Socket(InetAddress.getLocalHost(),4228);
-		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+public class ClientTranslateApplication {
+
+	public static void main(String[] args)  {
 		
-		String text=bufferedReader.readLine();
-		System.out.println(text);
-		bufferedReader.close();
-		socket.close();
+		ClientTranslateFrame clientFrame = new ClientTranslateFrame();
+		clientFrame.setVisible(true);
 		
-	}catch(IOException e)
-	{
-		e.printStackTrace();
-}
-}
+
+		try {
+			
+			// Connect to the server at local host, port 4228
+			Socket socket = new Socket(InetAddress.getLocalHost(), 4228);
+	
+			
+			clientFrame.waitForInputs();
+			
+			int language = clientFrame.getLanguage();
+			int sentence = clientFrame.getSentence();
+			System.out.println(language);	
+			
+			// Send the client language option and sentence option to server
+			DataOutputStream outputStream1 = new DataOutputStream (socket.getOutputStream());
+			outputStream1.writeInt(language);			
+			outputStream1.writeInt(sentence);
+			outputStream1.flush();
+			
+			
+			// Receive result from server
+			DataInputStream inputStream = new DataInputStream (socket.getInputStream());
+			String result = inputStream.readUTF();
+			System.out.print(result);
+			clientFrame.updateTranslateResult(result);
+			
+			inputStream.close();
+			socket.close();
+			outputStream1.close();
+			
+			
+			
+		}catch(IOException e)
+		{
+			e.printStackTrace();
+			
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+
+	}
+
 }
