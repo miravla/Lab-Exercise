@@ -10,7 +10,7 @@ public class ClientWordCount {
 
 	public static void main(String[] args) {
 		
-		// server port which client going to connect
+		// Port to receive and respond to request
 		final int serverPort=4228;
 		int bufferSize = 1024;
 		
@@ -19,30 +19,30 @@ public class ClientWordCount {
 			
 			DatagramSocket clientSocket = new DatagramSocket();
 			
-			// Get the IP address of server
+			// Data to establish connection to server
 			InetAddress serverAddress = InetAddress.getByName("localhost");
 			
-			// Create buffer to send data
-			byte sendDataBuffer [] = new byte [bufferSize];
+			// oppen buffer to send data
+			byte clientData [] = new byte [bufferSize];
 			
 			// Convert data to byte and store in buffer
 			String sentence = "Do You Wanna Build A Snowman?";
-			sendDataBuffer = sentence.getBytes();
+			clientData = sentence.getBytes();
 			
-			// Create UDP Packet
-			DatagramPacket  outputPacket = new DatagramPacket(sendDataBuffer, 
-					sendDataBuffer.length, serverAddress, serverPort);
+			// open UDP Packet
+			DatagramPacket  outputPacket = new DatagramPacket(clientData, 
+					clientData.length, serverAddress, serverPort);
 			
 			// Send packet to server
 			clientSocket.send(outputPacket);
 			
 			
-			// Create buffer to store receiving data 
-			byte receiveDataBuffer [] = new byte [bufferSize];
+			// Open buffer to receive data 
+			byte receiveData [] = new byte [bufferSize];
 			
 			// Receive packet from server 
 			DatagramPacket inputPacket = new DatagramPacket (
-					receiveDataBuffer, receiveDataBuffer.length);
+					receiveData, receiveData.length);
 			
 			clientSocket.receive(inputPacket);
 			

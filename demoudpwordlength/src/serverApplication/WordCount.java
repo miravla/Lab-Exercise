@@ -2,7 +2,6 @@ package serverApplication;
 
 public class WordCount {
 
-	// Count the number of words in text
 	public String getWordCount(String text)
 	{
 		

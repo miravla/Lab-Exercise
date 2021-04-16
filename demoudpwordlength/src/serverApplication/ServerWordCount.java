@@ -10,7 +10,7 @@ public class ServerWordCount {
 
 	public static void main(String[] args) {
 		
-		// Server UDP socket runs at this port
+		// Port to receive and respond to request
 		final int serverPort=4228;
 		int bufferSize = 1024;
 		
@@ -18,38 +18,38 @@ public class ServerWordCount {
 			// Instantiate a new DatagramSocket to receive responses from the client
 			DatagramSocket serverSocket = new DatagramSocket (serverPort);
 			
-			// Create buffers to hold receiving data
-		    byte receivingDataBuffer[] = new byte[bufferSize];
+			// Open buffers to Store client data
+		    byte clientDataReceived[] = new byte[bufferSize];
 		    
-		    DatagramPacket inputPacket = new DatagramPacket(receivingDataBuffer, receivingDataBuffer.length);
+		    DatagramPacket inputPacket = new DatagramPacket(clientDataReceived, clientDataReceived.length);
 		    System.out.println("Waiting for Connection....");
 		    
 		    // Receive data from the client and store in inputPacket
 		    serverSocket.receive(inputPacket);
 			
-			// Print client sent data
+			// Client Data
 		    String receivedData = new String (inputPacket.getData());
 		    System.out.println("Message of Client : " + receivedData);
 			
+		    //Count word
 			WordCount wordCount = new WordCount();
 			String sendData = wordCount.getWordCount(receivedData);
 			System.out.println("The sentence contains " + sendData+" words");
 			
-			// Create buffer to send result to client	
-			byte sendingDataBuffer[]= sendData.getBytes();
+			// Open buffer to send result back to client	
+			byte sendResult[]= sendData.getBytes();
 			
 			// Get client's address
 			InetAddress clientAddress = inputPacket.getAddress(); 
 			int clientPort = inputPacket.getPort();
 			
-			// Create new UDP packet with data to send to the client
-			DatagramPacket outputPacket = new DatagramPacket(sendingDataBuffer,
-					sendingDataBuffer.length, clientAddress, clientPort);
+			// Open new UDP packet to send to the client with their address
+			DatagramPacket outputPacket = new DatagramPacket(sendResult,
+					sendResult.length, clientAddress, clientPort);
 			
-			// Send the created packet to client
+			// Send the packet to client
 		    serverSocket.send(outputPacket);
-		    
-		    
+
 		    // Close the socket connection
 		    serverSocket.close();
 			
