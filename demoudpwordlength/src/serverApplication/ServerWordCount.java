@@ -32,8 +32,8 @@ public class ServerWordCount {
 		    String receivedData = new String (inputPacket.getData());
 		    System.out.println("Sent from the client: " + receivedData);
 			
-			CountWord countWord = new CountWord();
-			String sendData = countWord.getWordCount(receivedData);
+			WordCount wordCount = new WordCount();
+			String sendData = wordCount.getWordCount(receivedData);
 			System.out.println("Number of words in sentence: " + sendData);
 			
 			// Create buffer to send result to client

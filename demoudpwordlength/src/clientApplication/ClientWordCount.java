@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class ClientWordCount {
 
@@ -28,7 +26,7 @@ public class ClientWordCount {
 			byte sendDataBuffer [] = new byte [bufferSize];
 			
 			// Convert data to byte and store in buffer
-			String sentence = "How many words in this sentence?";
+			String sentence = "Do You Wanna Build A Snowman?";
 			sendDataBuffer = sentence.getBytes();
 			
 			// Create UDP Packet

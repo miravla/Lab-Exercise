@@ -5,7 +5,8 @@ public class WordCount {
 	// Count the number of words in text
 	public String getWordCount(String text)
 	{
-		int countWords=1;
+		
+		int noOfWord=1;
 		
 		for(int i = 0 ; i<text.length(); i++)
 		{
@@ -15,13 +16,14 @@ public class WordCount {
 				if(Character.isJavaIdentifierStart(text.charAt(i-1)) 
 						&& Character.isJavaIdentifierStart(text.charAt(i+1)))
 				{
-					++countWords;
+					++noOfWord;
 				}
 			}
 			
 		}
 		
-		return Integer.toString(countWords);
+		String str1 = Integer.toString(noOfWord);
+		return str1;
 		
 	}
 
