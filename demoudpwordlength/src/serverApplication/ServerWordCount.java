@@ -23,18 +23,18 @@ public class ServerWordCount {
 		    byte receivingDataBuffer[] = new byte[bufferSize];
 		    
 		    DatagramPacket inputPacket = new DatagramPacket(receivingDataBuffer, receivingDataBuffer.length);
-		    System.out.println("Waiting for a client to connect...");
+		    System.out.println("Waiting for Connection....");
 		    
 		    // Receive data from the client and store in inputPacket
 		    serverSocket.receive(inputPacket);
 			
 			// Print client sent data
 		    String receivedData = new String (inputPacket.getData());
-		    System.out.println("Sent from the client: " + receivedData);
+		    System.out.println("Message of Client : " + receivedData);
 			
 			WordCount wordCount = new WordCount();
 			String sendData = wordCount.getWordCount(receivedData);
-			System.out.println("Number of words in sentence: " + sendData);
+			System.out.println("The sentence Contains " + sendData+" words");
 			
 			// Create buffer to send result to client
 			// sendData is encoded to sequence of byte and store in buffer
