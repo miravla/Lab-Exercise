@@ -10,19 +10,7 @@ import ItemProduct.ItemProduct;
 
 
 
-/**
- * This class demonstrate the application of ObjectInputStream and 
- * ObjectOutputStream at the server-side application.
- * 
- * How to run this program?
- * 
- * 1. Open Terminal
- * 2. Change the directory to /workspace-dad/demoObjectStream/bin
- * 3. Run -> java console.server.ClientSideApp
- * 
- * @author emalianakasmuri
- *
- */
+
 
 public class ClientApplication {
 
@@ -42,7 +30,7 @@ public class ClientApplication {
 			int portNo = 4228;
 			InetAddress serverAddress = InetAddress.getLocalHost();
 
-			// Connect to the server at localhost, port 4229
+			// Connect to the server at localhost, port 4228
 			Socket socket = new Socket(serverAddress, portNo);
 
 			// Open stream to send object
