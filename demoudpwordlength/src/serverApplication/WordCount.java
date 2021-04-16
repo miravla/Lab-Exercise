@@ -7,17 +7,13 @@ public class WordCount {
 	{
 		
 		int noOfWord=1;
-		
 		for(int i = 0 ; i<text.length(); i++)
 		{
-			char temp=text.charAt(i);
-			if(Character.isWhitespace(temp))
+			char word=text.charAt(i);
+			if(Character.isWhitespace(word))
 			{
-				if(Character.isJavaIdentifierStart(text.charAt(i-1)) 
-						&& Character.isJavaIdentifierStart(text.charAt(i+1)))
-				{
-					++noOfWord;
-				}
+				++noOfWord;
+				
 			}
 			
 		}

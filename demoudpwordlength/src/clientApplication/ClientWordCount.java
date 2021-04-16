@@ -11,7 +11,7 @@ public class ClientWordCount {
 	public static void main(String[] args) {
 		
 		// server port which client going to connect
-		final int serverPort=50001;
+		final int serverPort=4228;
 		int bufferSize = 1024;
 		
 		try {
@@ -47,8 +47,8 @@ public class ClientWordCount {
 			clientSocket.receive(inputPacket);
 			
 			// Unpack packet
-			String result = new String (inputPacket.getData());
-			System.out.print("Number of words in the sentence : " + result );
+			String countResult = new String (inputPacket.getData());
+			System.out.print("Number of words in the sentence : " + countResult );
 			
 			
 			

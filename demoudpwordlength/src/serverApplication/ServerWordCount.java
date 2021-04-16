@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 
 public class ServerWordCount {
 
 	public static void main(String[] args) {
 		
 		// Server UDP socket runs at this port
-		final int serverPort=50001;
+		final int serverPort=4228;
 		int bufferSize = 1024;
 		
 		try {
@@ -34,10 +33,9 @@ public class ServerWordCount {
 			
 			WordCount wordCount = new WordCount();
 			String sendData = wordCount.getWordCount(receivedData);
-			System.out.println("The sentence Contains " + sendData+" words");
+			System.out.println("The sentence contains " + sendData+" words");
 			
-			// Create buffer to send result to client
-			// sendData is encoded to sequence of byte and store in buffer
+			// Create buffer to send result to client	
 			byte sendingDataBuffer[]= sendData.getBytes();
 			
 			// Get client's address
@@ -47,7 +45,6 @@ public class ServerWordCount {
 			// Create new UDP packet with data to send to the client
 			DatagramPacket outputPacket = new DatagramPacket(sendingDataBuffer,
 					sendingDataBuffer.length, clientAddress, clientPort);
-			
 			
 			// Send the created packet to client
 		    serverSocket.send(outputPacket);
