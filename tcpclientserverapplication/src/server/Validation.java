@@ -1,6 +1,6 @@
 package server;
 
-import client.ItemProduct;
+import ItemProduct.ItemProduct;
 
 public class Validation  {
 	

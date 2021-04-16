@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import client.ItemProduct;
+import ItemProduct.ItemProduct;
 
 
 
@@ -41,6 +41,7 @@ public class ServerApplication {
 			ServerSocket serverSocket = new ServerSocket(portNo);
 			
 			System.out.println("Ready for request");
+			int itemProductid=0, totalRequest =0;
 			
 			// Server need to be alive forever thus the while(true)
 			while (true) {
@@ -51,25 +52,35 @@ public class ServerApplication {
 				// Create input stream to read object
 				ObjectInputStream objectIS = new ObjectInputStream(socket.getInputStream());
 				
-				// Read object from stream and cast to Location
-				ItemProduct itemProduct=new ItemProduct();
+				// Read object from stream and cast to ItemProduct
+				ItemProduct itemProduct = (ItemProduct) objectIS.readObject();
+				
+
+				// To validate product name
+				Validation validation = new Validation();
+				
+				String result = validation.validateItemName(itemProduct);
+				
 				
 				// Process object
-				itemProduct.setItemProductid(1);
+				itemProduct.setItemProductid(++itemProductid);
+
 				
 				// Create output stream to send object
 				ObjectOutputStream objectOS = new ObjectOutputStream(socket.getOutputStream());
 				objectOS.writeObject(itemProduct);
 				
 				
-				System.out.println("Ready for next request");
 				
+				System.out.println(" Total request : " + ++totalRequest);
+				System.out.println(" Validation Result : " + result);
+				System.out.println("Ready for next request");
 				// Close all streams
 				objectIS.close();
 				objectOS.close();
 			}
 			
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import ItemProduct.ItemProduct;
 
 
 
@@ -41,14 +42,15 @@ public class ClientApplication {
 			int portNo = 4228;
 			InetAddress serverAddress = InetAddress.getLocalHost();
 
-			// Connect to the server at localhost, port 4228
+			// Connect to the server at localhost, port 4229
 			Socket socket = new Socket(serverAddress, portNo);
 
 			// Open stream to send object
 			ObjectOutputStream objectOS = new ObjectOutputStream(socket.getOutputStream());
 
+			String item=itemProduct.toString();
 			// Send request to server
-			System.out.println("Send object to server: " + itemProduct.toString());
+			System.out.println("Send object to server: " + item);
 			objectOS.writeObject(itemProduct);
 			objectOS.flush();
 			
@@ -56,12 +58,17 @@ public class ClientApplication {
 			ObjectInputStream objectIS = new ObjectInputStream(socket.getInputStream());
 			
 			// Get object from stream and display details
-			String result = (String)objectIS.readObject();
-			System.out.println("\n Validation Result : "+ result+ "\n");
-			System.out.print (" Product Id : " + itemProduct.getItemProductid() );
-			System.out.print ("\n Product Name : " + itemProduct.getName() );
-			System.out.print("\n Product Price : RM "+ itemProduct.getPrice()+"\n");
 			itemProduct = (ItemProduct) objectIS.readObject();
+						
+			// Get object from stream and display details
+			String result = (String)objectIS.readObject();
+			
+			//output result
+			System.out.println("Validation Result : "+ result);
+			System.out.println (" Product ID : " + itemProduct.getItemProductid() );
+			System.out.println ("Product Name : " + itemProduct.getName() );
+			System.out.println("Product Price : RM "+ itemProduct.getPrice()+"\n");
+		
 			
 			
 			// Close all closeable objects

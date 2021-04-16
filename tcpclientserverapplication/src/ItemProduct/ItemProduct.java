@@ -1,7 +1,13 @@
-package client;
+package ItemProduct;
 
-public class ItemProduct {
+import java.io.Serializable;
 
+public class ItemProduct implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1373449955289313933L;
 	private int itemProductid;
 	private String name;
 	private float price;
